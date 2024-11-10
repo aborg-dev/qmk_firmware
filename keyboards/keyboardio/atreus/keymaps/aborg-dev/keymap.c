@@ -14,7 +14,7 @@ enum layer_names {
 
 #define KC_LANG  LSFT(KC_RALT)
 
-const uint16_t PROGMEM escape_combo[] = {KC_J, KC_K, COMBO_END};
+const uint16_t PROGMEM escape_combo[] = {CTL_T(KC_J), KC_K, COMBO_END};
 combo_t key_combos[] = {
     COMBO(escape_combo, KC_ESC),
 };
@@ -34,7 +34,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
    */
   [_NUM] = LAYOUT( /* [> NUM <] */
     KC_CIRC, KC_AT,   KC_HASH, KC_DLR,         KC_PERC,                   KC_ASTR, KC_7,           KC_8,    KC_9,    KC_PLUS,
-    KC_EXLM, KC_LCBR, KC_LBRC, CTL_T(KC_LPRN), KC_UNDS,                   KC_EQL,  CTL_T(KC_4),    KC_5,    KC_6,    KC_PMNS,
+    KC_EXLM, KC_LCBR, KC_LBRC, KC_LPRN,        KC_UNDS,                   KC_EQL,  CTL_T(KC_4),    KC_5,    KC_6,    KC_PMNS,
     KC_AMPR, KC_RCBR, KC_RBRC, KC_RPRN,        KC_COLN, _______, _______, KC_0,    KC_1,           KC_2,    KC_3,    KC_DQUO,
     _______, _______, _______, _______,        _______, _______, _______, _______, _______,        _______, _______, _______),
   /*
