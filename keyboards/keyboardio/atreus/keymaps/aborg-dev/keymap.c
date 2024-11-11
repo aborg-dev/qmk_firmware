@@ -8,7 +8,7 @@
 enum custom_keycodes {
     CHKBOX = SAFE_RANGE,
     ARROW,
-    MY_OTHER_MACRO,
+    TMUX,
 };
 
 enum layer_names {
@@ -22,8 +22,10 @@ enum layer_names {
 #define KC_LANG  LSFT(KC_RALT)
 
 const uint16_t PROGMEM escape_combo[] = {CTL_T(KC_J), KC_K, COMBO_END};
+const uint16_t PROGMEM tmux_combo[] = {CTL_T(KC_F), KC_D, COMBO_END};
 combo_t key_combos[] = {
     COMBO(escape_combo, KC_ESC),
+    COMBO(tmux_combo, TMUX),
 };
 
 const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
@@ -99,12 +101,25 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
         }
         break;
 
-    case MY_OTHER_MACRO:
+    case TMUX:
         if (record->event.pressed) {
-           SEND_STRING(SS_LCTL("ac")); // selects all and copies
+            SEND_STRING(SS_LCTL("a"));
+            set_oneshot_layer(_WM, ONESHOT_START);
+        } else {
+            clear_oneshot_layer_state(ONESHOT_PRESSED);
         }
         break;
     }
     return true;
 };
 
+bool get_hold_on_other_key_press(uint16_t keycode, keyrecord_t *record) {
+    switch (keycode) {
+        case LT(_NUM, KC_BSPC):
+            // Immediately select the hold action when another key is pressed.
+            return true;
+        default:
+            // Do not select the hold action when another key is pressed.
+            return false;
+    }
+}
