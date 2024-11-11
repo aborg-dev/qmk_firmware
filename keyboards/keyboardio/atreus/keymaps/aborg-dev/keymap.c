@@ -5,11 +5,18 @@
 
 #include QMK_KEYBOARD_H
 
+enum custom_keycodes {
+    CHKBOX = SAFE_RANGE,
+    ARROW,
+    MY_OTHER_MACRO,
+};
+
 enum layer_names {
     _QW,
     _NUM,
     _NAV,
     _WM,
+    _MACRO,
 };
 
 #define KC_LANG  LSFT(KC_RALT)
@@ -24,7 +31,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
     KC_Q,    KC_W,    KC_E,    KC_R,           KC_T,                                                     KC_Y,           KC_U,           KC_I,    KC_O,    KC_P    ,
     KC_A,    KC_S,    KC_D,    CTL_T(KC_F),    KC_G,                                                     KC_H,           CTL_T(KC_J),    KC_K,    KC_L,    KC_SCLN ,
     KC_Z,    KC_X,    KC_C,    KC_V,           KC_B,              KC_GRV,             KC_BSLS,           KC_N,           KC_M,           KC_COMM, KC_DOT,  KC_SLSH ,
-    KC_ESC,  KC_TAB,  KC_LALT, KC_TAB,         LT(_NUM, KC_BSPC), LM(_WM, MOD_LGUI),  LT(_NAV, KC_ENT),  SFT_T(KC_SPC),  KC_LANG,        CW_TOGG, KC_QUOT, KC_ENT ),
+    KC_ESC,  KC_TAB,  KC_LALT, MO(_MACRO),     LT(_NUM, KC_BSPC), LM(_WM, MOD_LGUI),  LT(_NAV, KC_ENT),  SFT_T(KC_SPC),  KC_LANG,        CW_TOGG, OSL(_WM),KC_ENT ),
 
   /*
    *  ^       @      #     $    %        ||       *     7     8     9    +
@@ -35,7 +42,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
   [_NUM] = LAYOUT( /* [> NUM <] */
     KC_CIRC, KC_AT,   KC_HASH, KC_DLR,         KC_PERC,                   KC_ASTR, KC_7,           KC_8,    KC_9,    KC_PLUS,
     KC_EXLM, KC_LCBR, KC_LBRC, KC_LPRN,        KC_UNDS,                   KC_EQL,  CTL_T(KC_4),    KC_5,    KC_6,    KC_PMNS,
-    KC_AMPR, KC_RCBR, KC_RBRC, KC_RPRN,        KC_COLN, _______, _______, KC_0,    KC_1,           KC_2,    KC_3,    KC_DQUO,
+    KC_AMPR, KC_RCBR, KC_RBRC, KC_RPRN,        KC_COLN, _______, _______, KC_0,    KC_1,           KC_2,    KC_3,    KC_QUOT,
     _______, _______, _______, _______,        _______, _______, _______, _______, _______,        _______, _______, _______),
   /*
    * insert home   up  end   pgup       ||      up     F7    F8    F9   F10
@@ -58,5 +65,46 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
     _______, _______, _______, _______, _______,                   _______, _______, _______, _______, _______,
     KC_1,    KC_2,    KC_3,    KC_4,    KC_5,                      _______, _______, _______, _______, _______,
     _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, _______,
+    _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, _______),
+  /*
+   *  q       .      .     .    t        ||        .    .     .     .    .
+   *  1       2      3     4    5        ||        h    j     k     l    ;
+   *  .       .      .     .    .        ||        .    .     .     .    .
+   * lower  insert super shift bksp ctrl || alt space   fn    .     0    =
+   */
+  [_MACRO] = LAYOUT( /* [> MACRO <] */
+    _______, _______, _______, _______, _______,                   _______, _______, _______, _______, _______,
+    KC_1,    KC_2,    KC_3,    KC_4,    KC_5,                      _______, _______, _______, CHKBOX,  _______,
+    _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, ARROW,   _______,
     _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, _______)
 };
+
+bool process_record_user(uint16_t keycode, keyrecord_t *record) {
+    switch (keycode) {
+    case CHKBOX:
+        if (record->event.pressed) {
+            // when keycode CHKBOX is pressed
+            SEND_STRING("- [ ]");
+        } else {
+            // when keycode CHKBOX is released
+        }
+        break;
+
+    case ARROW:
+        if (record->event.pressed) {
+            // when keycode ARROW is pressed
+            SEND_STRING("->");
+        } else {
+            // when keycode ARROW is released
+        }
+        break;
+
+    case MY_OTHER_MACRO:
+        if (record->event.pressed) {
+           SEND_STRING(SS_LCTL("ac")); // selects all and copies
+        }
+        break;
+    }
+    return true;
+};
+
