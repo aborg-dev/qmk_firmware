@@ -33,7 +33,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
     KC_Q,    KC_W,    KC_E,    KC_R,           KC_T,                                                     KC_Y,           KC_U,           KC_I,    KC_O,    KC_P    ,
     KC_A,    KC_S,    KC_D,    CTL_T(KC_F),    KC_G,                                                     KC_H,           CTL_T(KC_J),    KC_K,    KC_L,    KC_SCLN ,
     KC_Z,    KC_X,    KC_C,    KC_V,           KC_B,              KC_GRV,             KC_BSLS,           KC_N,           KC_M,           KC_COMM, KC_DOT,  KC_SLSH ,
-    KC_ESC,  KC_TAB,  KC_LALT, MO(_MACRO),     LT(_NUM, KC_BSPC), LM(_WM, MOD_LGUI),  LT(_NAV, KC_ENT),  SFT_T(KC_SPC),  KC_LANG,        CW_TOGG, OSL(_WM),KC_ENT ),
+    KC_ESC,  KC_TAB,  KC_LALT, MO(_MACRO),     LT(_NUM, KC_ENT), LM(_WM, MOD_LGUI),   LT(_NAV, KC_TAB),  SFT_T(KC_SPC),  KC_LANG,        CW_TOGG, OSL(_WM),KC_ENT ),
 
   /*
    *  ^       @      #     $    %        ||       *     7     8     9    +
@@ -54,7 +54,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
    */
   [_NAV] = LAYOUT( /* [> NAV <] */
     KC_INS,  MS_WHLD, MS_UP,   MS_WHLU, KC_PGUP,                    KC_HOME, KC_PGDN, KC_PGUP, KC_END,  KC_F10  ,
-    KC_DEL,  MS_LEFT, MS_DOWN, MS_RGHT, KC_PGDN,                    KC_LEFT, KC_DOWN, KC_UP,   KC_RGHT, KC_F11  ,
+    KC_BSPC, MS_LEFT, MS_DOWN, MS_RGHT, KC_PGDN,                    KC_LEFT, KC_DOWN, KC_UP,   KC_RGHT, KC_F11  ,
     KC_NO,   KC_VOLU, _______, _______, _______,  _______, _______, KC_NO,   KC_F1,   KC_F2,   KC_F3,   KC_F12  ,
     _______, _______, _______, MS_BTN3, MS_BTN1, MS_BTN2, _______, _______,  _______, _______, _______, _______),
   /*
