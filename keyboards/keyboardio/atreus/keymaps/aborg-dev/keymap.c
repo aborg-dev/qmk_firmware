@@ -104,9 +104,7 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
     case TMUX:
         if (record->event.pressed) {
             SEND_STRING(SS_LCTL("a"));
-            set_oneshot_layer(_WM, ONESHOT_START);
         } else {
-            clear_oneshot_layer_state(ONESHOT_PRESSED);
         }
         break;
     }
