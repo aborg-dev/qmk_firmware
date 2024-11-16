@@ -14,6 +14,7 @@ enum custom_keycodes {
 enum layer_names {
     _QW,
     _NUM,
+    _SYM,
     _NAV,
     _WM,
     _MACRO,
@@ -31,9 +32,9 @@ combo_t key_combos[] = {
 const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
   [_QW] = LAYOUT( /* Qwerty */
     KC_Q,    KC_W,    KC_E,    KC_R,           KC_T,                                                     KC_Y,           KC_U,           KC_I,    KC_O,    KC_P    ,
-    KC_A,    KC_S,    KC_D,    CTL_T(KC_F),    KC_G,                                                     KC_H,           CTL_T(KC_J),    KC_K,    KC_L,    KC_SCLN ,
+    LT(_SYM, KC_A),    KC_S,    KC_D,    CTL_T(KC_F),    KC_G,                                                     KC_H,           CTL_T(KC_J),    KC_K,    KC_L,    LT(_SYM, KC_SCLN) ,
     KC_Z,    KC_X,    KC_C,    KC_V,           KC_B,              KC_GRV,             KC_BSLS,           KC_N,           KC_M,           KC_COMM, KC_DOT,  KC_SLSH ,
-    KC_ESC,  KC_TAB,  KC_LALT, MO(_MACRO),     LT(_NUM, KC_ENT), LM(_WM, MOD_LGUI),   LT(_NAV, KC_BSPC), SFT_T(KC_SPC),  KC_LANG,        CW_TOGG, OSL(_WM),KC_ENT ),
+    CW_TOGG,  KC_TAB,  KC_LALT, MO(_MACRO),     LT(_NUM, KC_ENT), LM(_WM, MOD_LGUI),   LT(_NAV, KC_BSPC), SFT_T(KC_SPC),  KC_LANG,        CW_TOGG, OSL(_WM),KC_ENT ),
 
   /*
    *  ^       @      #     $    %        ||       *     7     8     9    +
@@ -45,6 +46,17 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
     KC_CIRC, KC_AT,   KC_HASH, KC_DLR,         KC_PERC,                   KC_ASTR, KC_7,           KC_8,    KC_9,    KC_PLUS,
     KC_EXLM, KC_LCBR, KC_LBRC, KC_LPRN,        KC_UNDS,                   KC_EQL,  CTL_T(KC_4),    KC_5,    KC_6,    KC_PMNS,
     KC_AMPR, KC_RCBR, KC_RBRC, KC_RPRN,        KC_COLN, _______, _______, KC_0,    KC_1,           KC_2,    KC_3,    KC_QUOT,
+    _______, _______, _______, _______,        _______, _______, _______, _______, _______,        _______, _______, _______),
+  /*
+   *  '       <      >     "    .        ||       &     :     [     ]    %
+   *  !       -      +     =    #        ||       |     :     (     )    ?
+   *  ^       /      *     \    :        ||       ~     $     {     }    @
+   * lower    .      .     .   bksp  tab || ent space   .     .     .    .
+   */
+  [_SYM] = LAYOUT( /* [> SYM <] */
+    KC_QUOT, KC_LT,   KC_GT,   KC_DQT,         KC_DOT,                    KC_AMPR, KC_COLN, KC_LBRC,  KC_RBRC,    KC_PERC,
+    KC_EXLM, KC_PMNS, KC_PLUS, KC_EQL,         KC_HASH,                   KC_PIPE, KC_COLN, KC_LPRN,  KC_RPRN,    KC_QUES,
+    KC_CIRC, KC_SLSH, KC_ASTR, KC_BSLS,        KC_COLN, _______, _______, KC_TILD, KC_DLR,  KC_LCBR,  KC_RCBR,    KC_AT,
     _______, _______, _______, _______,        _______, _______, _______, _______, _______,        _______, _______, _______),
   /*
    * insert home   up  end   pgup       ||      up     F7    F8    F9   F10
