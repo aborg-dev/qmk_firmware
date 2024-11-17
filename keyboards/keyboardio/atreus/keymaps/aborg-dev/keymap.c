@@ -16,7 +16,6 @@ enum layer_names {
     _NUM,
     _SYM,
     _NAV,
-    _WM,
     _MACRO,
 };
 
@@ -34,7 +33,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
     KC_Q,    KC_W,    KC_E,    KC_R,           KC_T,                                                     KC_Y,           KC_U,           KC_I,    KC_O,    KC_P    ,
     LT(_SYM, KC_A),    KC_S,    KC_D,    CTL_T(KC_F),    KC_G,                                                     KC_H,           CTL_T(KC_J),    KC_K,    KC_L,    LT(_SYM, KC_SCLN) ,
     KC_Z,    KC_X,    KC_C,    KC_V,           KC_B,              KC_GRV,             KC_BSLS,           KC_N,           KC_M,           KC_COMM, KC_DOT,  KC_SLSH ,
-    CW_TOGG,  KC_TAB,  KC_LALT, MO(_MACRO),     LT(_NUM, KC_ENT), LM(_WM, MOD_LGUI),   LT(_NAV, KC_BSPC), SFT_T(KC_SPC),  KC_LANG,        CW_TOGG, OSL(_WM),KC_ENT ),
+    CW_TOGG,  KC_TAB,  KC_LALT, MO(_MACRO),     LT(_NUM, KC_ENT), GUI_T(KC_UNDS),   LT(_NAV, KC_BSPC), SFT_T(KC_SPC),  KC_LANG,        CW_TOGG, OSL(_NUM),KC_ENT ),
 
   /*
    *  ^       @      #     $    %        ||       *     7     8     9    +
@@ -75,17 +74,6 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
    *  .       .      .     .    .        ||        .    .     .     .    .
    * lower  insert super shift bksp ctrl || alt space   fn    .     0    =
    */
-  [_WM] = LAYOUT( /* [> WM <] */
-    _______, _______, _______, _______, _______,                   _______, _______, _______, _______, _______,
-    KC_1,    KC_2,    KC_3,    KC_4,    KC_5,                      _______, _______, _______, _______, _______,
-    _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, _______,
-    _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, _______),
-  /*
-   *  q       .      .     .    t        ||        .    .     .     .    .
-   *  1       2      3     4    5        ||        h    j     k     l    ;
-   *  .       .      .     .    .        ||        .    .     .     .    .
-   * lower  insert super shift bksp ctrl || alt space   fn    .     0    =
-   */
   [_MACRO] = LAYOUT( /* [> MACRO <] */
     _______, _______, _______, _______, _______,                   _______, _______, _______, _______, _______,
     KC_1,    KC_2,    KC_3,    KC_4,    KC_5,                      _______, _______, _______, CHKBOX,  _______,
@@ -95,6 +83,12 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 
 bool process_record_user(uint16_t keycode, keyrecord_t *record) {
     switch (keycode) {
+    case GUI_T(KC_UNDS):
+        if (record->tap.count && record->event.pressed) {
+            tap_code16(KC_UNDS); // Send KC_UNDS on tap
+            return false;        // Return false to ignore further processing of key
+        }
+        break;
     case CHKBOX:
         if (record->event.pressed) {
             // when keycode CHKBOX is pressed
