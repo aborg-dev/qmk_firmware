@@ -16,7 +16,6 @@ enum layer_names {
     _NUM,
     _SYM,
     _NAV,
-    _MACRO,
 };
 
 #define KC_LANG  LSFT(KC_RALT)
@@ -28,12 +27,21 @@ combo_t key_combos[] = {
     COMBO(tmux_combo, TMUX),
 };
 
+const key_override_t coma_key_override = ko_make_basic(MOD_MASK_SHIFT, KC_COMM, KC_EXLM);
+const key_override_t dot_key_override = ko_make_basic(MOD_MASK_SHIFT, KC_DOT, KC_QUES);
+
+// This globally defines all key overrides to be used
+const key_override_t *key_overrides[] = {
+	&coma_key_override,
+	&dot_key_override
+};
+
 const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
   [_QW] = LAYOUT( /* Qwerty */
     KC_Q,    KC_W,    KC_E,    KC_R,           KC_T,                                                     KC_Y,           KC_U,           KC_I,    KC_O,    KC_P    ,
     LT(_SYM, KC_A),    KC_S,    KC_D,    CTL_T(KC_F),    KC_G,                                                     KC_H,           CTL_T(KC_J),    KC_K,    KC_L,    LT(_SYM, KC_SCLN) ,
     KC_Z,    KC_X,    KC_C,    KC_V,           KC_B,              KC_GRV,             KC_BSLS,           KC_N,           KC_M,           KC_COMM, KC_DOT,  KC_SLSH ,
-    CW_TOGG,  KC_TAB,  KC_LALT, MO(_MACRO),     LT(_NUM, KC_ENT), GUI_T(KC_UNDS),   LT(_NAV, KC_BSPC), SFT_T(KC_SPC),  KC_LANG,        CW_TOGG, OSL(_NUM),KC_ENT ),
+    CW_TOGG,  KC_TAB,  KC_LALT, KC_TAB,     LT(_NUM, KC_ENT), GUI_T(KC_UNDS),   LT(_NAV, KC_BSPC), SFT_T(KC_SPC),  KC_LANG,        CW_TOGG, OSL(_NUM),KC_ENT ),
 
   /*
    *  ^       @      #     $    %        ||       *     7     8     9    +
@@ -42,9 +50,9 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
    * lower    .      .     .   bksp  tab || ent space   .     .     .    .
    */
   [_NUM] = LAYOUT( /* [> NUM <] */
-    KC_CIRC, KC_AT,   KC_HASH, KC_DLR,         KC_PERC,                   KC_ASTR, KC_7,           KC_8,    KC_9,    KC_PLUS,
-    KC_EXLM, KC_LCBR, KC_LBRC, KC_LPRN,        KC_UNDS,                   KC_EQL,  CTL_T(KC_4),    KC_5,    KC_6,    KC_PMNS,
-    KC_AMPR, KC_RCBR, KC_RBRC, KC_RPRN,        KC_COLN, _______, _______, KC_0,    KC_1,           KC_2,    KC_3,    KC_QUOT,
+    KC_CIRC, KC_AT,   KC_HASH, KC_DLR,         KC_PERC,                   KC_COLN, KC_7,           KC_8,    KC_9,    KC_PLUS,
+    KC_EXLM, KC_LCBR, KC_LBRC, KC_LPRN,        KC_UNDS,                   KC_0,  CTL_T(KC_1),    KC_2,    KC_3,    KC_PMNS,
+    KC_AMPR, KC_RCBR, KC_RBRC, KC_RPRN,        KC_COLN, _______, _______, KC_UNDS,    KC_4,           KC_5,    KC_6,    KC_DOT,
     _______, _______, _______, _______,        _______, _______, _______, _______, _______,        _______, _______, _______),
   /*
    *  '       <      >     "    .        ||       &     :     [     ]    %
@@ -53,7 +61,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
    * lower    .      .     .   bksp  tab || ent space   .     .     .    .
    */
   [_SYM] = LAYOUT( /* [> SYM <] */
-    KC_QUOT, KC_LT,   KC_GT,   KC_DQT,         KC_DOT,                    KC_AMPR, KC_COLN, KC_LBRC,  KC_RBRC,    KC_PERC,
+    KC_QUOT, KC_LT,   KC_GT,   KC_DQT,         KC_DOT,                    KC_AMPR, ARROW,   KC_LBRC,  KC_RBRC,    KC_PERC,
     KC_EXLM, KC_PMNS, KC_PLUS, KC_EQL,         KC_HASH,                   KC_PIPE, KC_COLN, KC_LPRN,  KC_RPRN,    KC_QUES,
     KC_CIRC, KC_SLSH, KC_ASTR, KC_BSLS,        KC_COLN, _______, _______, KC_TILD, KC_DLR,  KC_LCBR,  KC_RCBR,    KC_AT,
     _______, _______, _______, _______,        _______, _______, _______, _______, _______,        _______, _______, _______),
@@ -67,18 +75,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
     KC_INS,  MS_WHLD, MS_UP,   MS_WHLU, KC_PGUP,                    KC_HOME, KC_PGDN, KC_PGUP, KC_END,  KC_F10  ,
     KC_BSPC, MS_LEFT, MS_DOWN, MS_RGHT, KC_PGDN,                    KC_LEFT, KC_DOWN, KC_UP,   KC_RGHT, KC_F11  ,
     KC_NO,   KC_VOLU, _______, _______, _______,  _______, _______, KC_NO,   KC_F1,   KC_F2,   KC_F3,   KC_F12  ,
-    _______, _______, _______, MS_BTN3, MS_BTN1, MS_BTN2, _______, _______,  _______, _______, _______, _______),
-  /*
-   *  q       .      .     .    t        ||        .    .     .     .    .
-   *  1       2      3     4    5        ||        h    j     k     l    ;
-   *  .       .      .     .    .        ||        .    .     .     .    .
-   * lower  insert super shift bksp ctrl || alt space   fn    .     0    =
-   */
-  [_MACRO] = LAYOUT( /* [> MACRO <] */
-    _______, _______, _______, _______, _______,                   _______, _______, _______, _______, _______,
-    KC_1,    KC_2,    KC_3,    KC_4,    KC_5,                      _______, _______, _______, CHKBOX,  _______,
-    _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, ARROW,   _______,
-    _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, _______)
+    _______, _______, _______, MS_BTN3, MS_BTN1, MS_BTN2, _______, _______,  _______, _______, _______, _______)
 };
 
 bool process_record_user(uint16_t keycode, keyrecord_t *record) {
