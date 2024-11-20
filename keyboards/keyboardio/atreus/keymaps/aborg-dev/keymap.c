@@ -20,11 +20,9 @@ enum layer_names {
 
 #define KC_LANG  LSFT(KC_RALT)
 
-const uint16_t PROGMEM escape_combo[] = {CTL_T(KC_J), KC_K, COMBO_END};
-const uint16_t PROGMEM tmux_combo[] = {CTL_T(KC_F), KC_D, COMBO_END};
+const uint16_t PROGMEM escape_combo[] = {CTL_T(KC_J), LT(_NAV, KC_K), COMBO_END};
 combo_t key_combos[] = {
     COMBO(escape_combo, KC_ESC),
-    COMBO(tmux_combo, TMUX),
 };
 
 const key_override_t coma_key_override = ko_make_basic(MOD_MASK_SHIFT, KC_COMM, KC_EXLM);
@@ -39,9 +37,9 @@ const key_override_t *key_overrides[] = {
 const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
   [_QW] = LAYOUT( /* Qwerty */
     KC_Q,    KC_W,    KC_E,    KC_R,           KC_T,                                                     KC_Y,           KC_U,           KC_I,    KC_O,    KC_P    ,
-    LT(_SYM, KC_A),    KC_S,    KC_D,    CTL_T(KC_F),    KC_G,                                                     KC_H,           CTL_T(KC_J),    KC_K,    KC_L,    LT(_SYM, KC_SCLN) ,
+    LT(_SYM, KC_A),    GUI_T(KC_S),    LT(_NAV, KC_D),    CTL_T(KC_F),    KC_G,                                                     KC_H,           CTL_T(KC_J),    LT(_NAV, KC_K),    GUI_T(KC_L),    LT(_SYM, KC_SCLN) ,
     KC_Z,    KC_X,    KC_C,    KC_V,           KC_B,              KC_GRV,             KC_BSLS,           KC_N,           KC_M,           KC_COMM, KC_DOT,  KC_SLSH ,
-    CW_TOGG,  KC_TAB,  KC_LALT, KC_TAB,     LT(_NUM, KC_ENT), GUI_T(KC_UNDS),   LT(_NAV, KC_BSPC), SFT_T(KC_SPC),  KC_LANG,        CW_TOGG, OSL(_NUM),KC_ENT ),
+    CW_TOGG,  KC_TAB,  KC_LALT, KC_TAB,     LT(_NUM, KC_ENT), KC_UNDS,   KC_BSPC, SFT_T(KC_SPC),  KC_LANG,        CW_TOGG, OSL(_NUM),KC_ENT ),
 
   /*
    *  ^       @      #     $    %        ||       *     7     8     9    +
@@ -86,6 +84,7 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
             return false;        // Return false to ignore further processing of key
         }
         break;
+
     case CHKBOX:
         if (record->event.pressed) {
             // when keycode CHKBOX is pressed
@@ -103,14 +102,8 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
             // when keycode ARROW is released
         }
         break;
-
-    case TMUX:
-        if (record->event.pressed) {
-            SEND_STRING(SS_LCTL("a"));
-        } else {
-        }
-        break;
     }
+
     return true;
 };
 
