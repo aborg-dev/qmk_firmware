@@ -20,7 +20,7 @@ enum layer_names {
 
 #define KC_LANG  LSFT(KC_RALT)
 
-const uint16_t PROGMEM escape_combo[] = {CTL_T(KC_J), LT(_NAV, KC_K), COMBO_END};
+const uint16_t PROGMEM escape_combo[] = {CTL_T(KC_J), SFT_T(KC_K), COMBO_END};
 combo_t key_combos[] = {
     COMBO(escape_combo, KC_ESC),
 };
@@ -37,9 +37,9 @@ const key_override_t *key_overrides[] = {
 const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
   [_QW] = LAYOUT( /* Qwerty */
     KC_Q,    KC_W,    KC_E,    KC_R,           KC_T,                                                     KC_Y,           KC_U,           KC_I,    KC_O,    KC_P    ,
-    LT(_SYM, KC_A),    GUI_T(KC_S),    LT(_NAV, KC_D),    CTL_T(KC_F),    KC_G,                                                     KC_H,           CTL_T(KC_J),    LT(_NAV, KC_K),    GUI_T(KC_L),    LT(_SYM, KC_SCLN) ,
+    LT(_SYM, KC_A),    GUI_T(KC_S),    SFT_T(KC_D),    CTL_T(KC_F),    KC_G,                                                     KC_H,           CTL_T(KC_J),    SFT_T(KC_K),    GUI_T(KC_L),    LT(_SYM, KC_SCLN) ,
     KC_Z,    KC_X,    KC_C,    KC_V,           KC_B,              KC_GRV,             KC_BSLS,           KC_N,           KC_M,           KC_COMM, KC_DOT,  KC_SLSH ,
-    CW_TOGG,  KC_TAB,  KC_LALT, KC_TAB,     LT(_NUM, KC_ENT), KC_UNDS,   KC_BSPC, SFT_T(KC_SPC),  KC_LANG,        CW_TOGG, OSL(_NUM),KC_ENT ),
+    CW_TOGG,  KC_TAB,  KC_LALT, KC_TAB,     LT(_NAV, KC_ENT), LT(_NUM, KC_UNDS),   KC_BSPC, KC_SPC,  KC_LANG,        CW_TOGG, OSL(_NUM),KC_ENT ),
 
   /*
    *  ^       @      #     $    %        ||       *     7     8     9    +
@@ -49,9 +49,9 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
    */
   [_NUM] = LAYOUT( /* [> NUM <] */
     KC_CIRC, KC_AT,   KC_HASH, KC_DLR,         KC_PERC,                   KC_COLN, KC_7,           KC_8,    KC_9,    KC_PLUS,
-    KC_EXLM, KC_LCBR, KC_LBRC, KC_LPRN,        KC_UNDS,                   KC_0,  CTL_T(KC_1),    KC_2,    KC_3,    KC_PMNS,
-    KC_AMPR, KC_RCBR, KC_RBRC, KC_RPRN,        KC_COLN, _______, _______, KC_UNDS,    KC_4,           KC_5,    KC_6,    KC_DOT,
-    _______, _______, _______, _______,        _______, _______, _______, _______, _______,        _______, _______, _______),
+    KC_EXLM, KC_LCBR, KC_LBRC, KC_LPRN,        KC_UNDS,                   KC_COLN, CTL_T(KC_1),    KC_2,    KC_3,    KC_PMNS,
+    KC_AMPR, KC_RCBR, KC_RBRC, KC_RPRN,        KC_COLN, _______, _______, KC_UNDS, KC_4,           KC_5,    KC_6,    KC_DOT,
+    _______, _______, _______, _______,        _______, _______, KC_0,    _______, _______,        _______, _______, _______),
   /*
    *  '       <      >     "    .        ||       &     :     [     ]    %
    *  !       -      +     =    #        ||       |     :     (     )    ?
