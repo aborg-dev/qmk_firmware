@@ -38,8 +38,8 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
   [_QW] = LAYOUT( /* Qwerty */
     KC_Q,    KC_W,    KC_E,    KC_R,           KC_T,                                                     KC_Y,           KC_U,           KC_I,    KC_O,    KC_P    ,
     LT(_SYM, KC_A),    GUI_T(KC_S),    SFT_T(KC_D),    CTL_T(KC_F),    KC_G,                                                     KC_H,           CTL_T(KC_J),    SFT_T(KC_K),    GUI_T(KC_L),    LT(_SYM, KC_SCLN) ,
-    KC_Z,    KC_X,    KC_C,    KC_V,           KC_B,              KC_GRV,             KC_BSLS,           KC_N,           KC_M,           KC_COMM, KC_DOT,  KC_SLSH ,
-    CW_TOGG,  KC_TAB,  KC_LALT, KC_TAB,     LT(_NAV, KC_ENT), LT(_NUM, KC_UNDS),   KC_BSPC, KC_SPC,  KC_LANG,        CW_TOGG, OSL(_NUM),KC_ENT ),
+    ALT_T(KC_Z),    KC_X,    KC_C,    LT(_NUM, KC_V),           KC_B,              KC_GRV,             KC_BSLS,           KC_N,           KC_M,           KC_COMM, KC_DOT,  ALT_T(KC_SLSH) ,
+    KC_BSPC,  KC_TAB,  KC_LALT, KC_TAB,     LT(_NAV, KC_ENT), KC_UNDS,   KC_TAB, KC_SPC,  KC_LANG,        CW_TOGG, OSL(_NUM),KC_ENT ),
 
   /*
    *  ^       @      #     $    %        ||       *     7     8     9    +
@@ -72,7 +72,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
   [_NAV] = LAYOUT( /* [> NAV <] */
     KC_INS,  MS_WHLD, MS_UP,   MS_WHLU, KC_PGUP,                    KC_HOME, KC_PGDN, KC_PGUP, KC_END,  KC_F10  ,
     KC_BSPC, MS_LEFT, MS_DOWN, MS_RGHT, KC_PGDN,                    KC_LEFT, KC_DOWN, KC_UP,   KC_RGHT, KC_F11  ,
-    KC_NO,   KC_VOLU, _______, _______, _______,  _______, _______, KC_NO,   KC_F1,   KC_F2,   KC_F3,   KC_F12  ,
+    KC_NO,   KC_VOLU, _______, _______, _______,  _______, _______, C(KC_LBRC),   C(S(KC_TAB)),   C(KC_TAB),   C(KC_RBRC),   KC_F12  ,
     _______, _______, _______, MS_BTN3, MS_BTN1, MS_BTN2, _______, _______,  _______, _______, _______, _______)
 };
 
